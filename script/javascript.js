@@ -30,18 +30,26 @@ function setup(numBoxes) {
 
 function addHoverEventToButtons(numBoxes) {
     const listOfRows = document.querySelectorAll('.row');
-
     for(let i = 0; i < numBoxes; i++) {
         for(let j = 0; j < numBoxes; j++) {
             listOfRows[i].childNodes[j].addEventListener('mouseover',() => {
-                changeBackgroundColor(listOfRows[i].childNodes[j]);
+            changeBackgroundColor(listOfRows[i].childNodes[j]);
             });
         }
     }
 }
 
+function initSelect() {
+}
+
 function changeBackgroundColor(node) {
-    node.style.backgroundColor = 'black';
+    const dropDown = document.getElementById('dropdown').value;
+    let color;
+
+    (dropDown == 'Black') ? color = 'Black' : 
+    color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+
+    node.style.backgroundColor = color;
 }
 
 function clearGrid(numBoxes) {
