@@ -1,3 +1,8 @@
+const once = {
+    once : true
+};
+
+
 function setup(numBoxes) {
     const gridContainerSelector = document.querySelector('#grid-container');
     const size = 800/numBoxes;
@@ -50,5 +55,34 @@ function clearGrid(numBoxes) {
 }
 
 function promptUser() {
-    prompt('Enter length of side for grid. Max 100');
+    const response = prompt('Enter length of side for grid. Max: 100. Default: 16', '16');
+    return response;
 }
+
+function initialize(numBoxes) {
+    setup(numBoxes);
+    initButton();
+}
+
+function initButton() {
+    const resetButton = document.querySelector('#resetbtn');
+    resetButton.addEventListener('click', () => {
+
+        let userInput = promptUser();
+        if(userInput <= 0 || userInput > 100) {
+            alert('Please choose a number between 1-100. Reverting back to 16x16 grid.');
+            userInput = 16;
+        }
+        removeGrid();
+        initialize(userInput);
+    }, once)
+}
+
+function removeGrid() {
+    const gridContainerSelector = document.querySelector('#grid-container');
+    while(gridContainerSelector.hasChildNodes()) {
+        gridContainerSelector.removeChild(gridContainerSelector.firstChild);
+    }
+}
+
+initialize(16);

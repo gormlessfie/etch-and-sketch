@@ -11,9 +11,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 90px;
 }
 
-#resetButton {
+#resetbtn {
+    width: 200px;
+    height: 50px;
+    font-size: 2em;
 }
 
 #main-container {
