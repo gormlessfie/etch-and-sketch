@@ -142,8 +142,7 @@ function initBoxRight() {
     const gitBox = document.querySelector('#box-right');
 
     gitBox.addEventListener('click', () => {
-        location.href='https://github.com/gormlessfie';
-        console.log('pressed!');
+        location.href='https://github.com/gormlessfie/etch-and-sketch';
     });
 }
 
