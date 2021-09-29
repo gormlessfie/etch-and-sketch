@@ -2,7 +2,6 @@ const once = {
     once : true
 };
 
-
 function setup(numBoxes) {
     const gridContainerSelector = document.querySelector('#grid-container');
     const size = 800/numBoxes;
@@ -33,34 +32,61 @@ function addHoverEventToButtons(numBoxes) {
     for(let i = 0; i < numBoxes; i++) {
         for(let j = 0; j < numBoxes; j++) {
             listOfRows[i].childNodes[j].addEventListener('mouseover',() => {
-            decide(listOfRows[i].childNodes[j], numBoxes);
+            decide(listOfRows[i].childNodes[j]);
             });
         }
     }
 }
 
-
-function decide(node, numBoxes) {
-    let red = Math.floor(Math.random() * 256);
-    let green = Math.floor(Math.random() * 256);
-    let blue = Math.floor(Math.random() * 256);
-
+function decide(node) {
     if(node.classList.contains('activated')) {
-        console.log('consecutive!');
-        return changeBackgroundColor(node);
+        return consecutiveHover(node, masterArray);
     } 
 
     else {
-        return firstHover(node, red, green, blue);
-        
+        return firstHover(node);
     }
 
 }
 
-function firstHover(node, red, green, blue) {
+let masterArray = [];
+
+function drawFromArray(node, masterArray) {
+    for(let i = 0; i < masterArray.length; i++) {
+        if(node == masterArray[i][0]){
+
+            masterArray[i][1][0] -= masterArray[i][2][0];
+
+            masterArray[i][1][1] -= masterArray[i][2][1];
+
+            masterArray[i][1][2] -= masterArray[i][2][2];
+
+            console.log(`orig: ${masterArray[i][1][0]}, ${masterArray[i][1][1]}, ${masterArray[i][1][2]}`);
+            console.log(`altered by 10%: ${masterArray[i][2][0]}, ${masterArray[i][2][1]}, ${masterArray[i][2][2]}`);
+            node.style.backgroundColor = `rgb(${masterArray[i][1][0]}, ${masterArray[i][1][1]}, ${masterArray[i][1][2]})`;
+            console.log(`result: ${masterArray[i][1][0]}, ${masterArray[i][1][1]}, ${masterArray[i][1][2]}`);
+        }
+    }
+}
+
+function consecutiveHover(node, masterArray) {
+    drawFromArray(node, masterArray);
+}
+
+function firstHover(node) {
+    let red = Math.floor(Math.random() * 256);
+    let green = Math.floor(Math.random() * 256);
+    let blue = Math.floor(Math.random() * 256);
+
+    console.log(`${red}, ${green}, ${blue}`);
     node.classList.add('activated');
     node.style.backgroundColor = `rgb(${red},${green},${blue})`;
-    return `rgb(${red},${green},${blue})`
+
+    let divBackgroundColor = window.getComputedStyle(node).backgroundColor;
+    let values = divBackgroundColor.substring(4, divBackgroundColor.length-1).replace(/ /g, '').split(',');
+    let alteredValues = [values[0]/10, values[1]/10, values[2]/10];
+    let infoArray = [node, values, alteredValues];
+    masterArray.push(infoArray);
 }
 
 function changeBackgroundColor(node) {
