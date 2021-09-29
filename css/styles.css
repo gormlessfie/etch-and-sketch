@@ -19,6 +19,7 @@ img {
 #header {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #fdebe7;
 }
 
@@ -26,12 +27,11 @@ img {
 #box-right {
     display: flex;
     align-items: center;
-    margin-left: 18%;
     padding: 10px;
     gap: 5px;
     border-radius: 30px;
     background-color: #ef9273;
-
+    margin-left: 300px;
     cursor: pointer;
 }
 
@@ -39,7 +39,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 29%;
+    margin-left: 410px;
     gap: 30px;
 }
 
@@ -64,8 +64,4 @@ img {
     min-height: 800px;
 
     background-color: palevioletred;
-}
-
-#git-link {
-
 }
