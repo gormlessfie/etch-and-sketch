@@ -25,7 +25,7 @@ function setup(numBoxes) {
         }
         gridContainerSelector.appendChild(rowBoxes);
     }
-    addHoverEventToButtons(numBoxes); 
+    addHoverEventToButtons(numBoxes);
 }
 
 function addHoverEventToButtons(numBoxes) {
@@ -33,13 +33,34 @@ function addHoverEventToButtons(numBoxes) {
     for(let i = 0; i < numBoxes; i++) {
         for(let j = 0; j < numBoxes; j++) {
             listOfRows[i].childNodes[j].addEventListener('mouseover',() => {
-            changeBackgroundColor(listOfRows[i].childNodes[j]);
+            decide(listOfRows[i].childNodes[j], numBoxes);
             });
         }
     }
 }
 
-function initSelect() {
+
+function decide(node, numBoxes) {
+    let red = Math.floor(Math.random() * 256);
+    let green = Math.floor(Math.random() * 256);
+    let blue = Math.floor(Math.random() * 256);
+
+    if(node.classList.contains('activated')) {
+        console.log('consecutive!');
+        return changeBackgroundColor(node);
+    } 
+
+    else {
+        return firstHover(node, red, green, blue);
+        
+    }
+
+}
+
+function firstHover(node, red, green, blue) {
+    node.classList.add('activated');
+    node.style.backgroundColor = `rgb(${red},${green},${blue})`;
+    return `rgb(${red},${green},${blue})`
 }
 
 function changeBackgroundColor(node) {
