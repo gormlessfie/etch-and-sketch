@@ -2,7 +2,6 @@ const once = {
     once : true
 };
 
-
 function setup(numBoxes) {
     const gridContainerSelector = document.querySelector('#grid-container');
     const size = 800/numBoxes;
@@ -25,7 +24,7 @@ function setup(numBoxes) {
         }
         gridContainerSelector.appendChild(rowBoxes);
     }
-    addHoverEventToButtons(numBoxes); 
+    addHoverEventToButtons(numBoxes);
 }
 
 function addHoverEventToButtons(numBoxes) {
@@ -33,23 +32,68 @@ function addHoverEventToButtons(numBoxes) {
     for(let i = 0; i < numBoxes; i++) {
         for(let j = 0; j < numBoxes; j++) {
             listOfRows[i].childNodes[j].addEventListener('mouseover',() => {
-            changeBackgroundColor(listOfRows[i].childNodes[j]);
+            dropDown = document.getElementById('dropdown').value;
+            if(dropDown == 'Black') {
+                listOfRows[i].childNodes[j].style.backgroundColor = 'black';
+            } else if(dropDown == 'White') {
+                listOfRows[i].childNodes[j].style.backgroundColor = 'white';
+            }
+            else{
+            decide(listOfRows[i].childNodes[j]);
+            }
             });
         }
     }
 }
 
-function initSelect() {
+let dropDown;
+function decide(node) {
+    if(node.classList.contains('activated')) {
+        return consecutiveHover(node, masterArray);
+    } 
+    else {
+        return firstHover(node);
+    }
+
 }
 
-function changeBackgroundColor(node) {
-    const dropDown = document.getElementById('dropdown').value;
-    let color;
+let masterArray = [];
 
-    (dropDown == 'Black') ? color = 'Black' : 
-    color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+function drawFromArray(node, masterArray) {
+    for(let i = 0; i < masterArray.length; i++) {
+        if(node == masterArray[i][0]){
 
-    node.style.backgroundColor = color;
+            masterArray[i][1][0] -= masterArray[i][2][0];
+            masterArray[i][1][1] -= masterArray[i][2][1];
+            masterArray[i][1][2] -= masterArray[i][2][2];
+
+            node.style.backgroundColor = `rgb(${masterArray[i][1][0]}, ${masterArray[i][1][1]}, ${masterArray[i][1][2]})`;
+            console.log(`result: ${masterArray[i][1][0]}, ${masterArray[i][1][1]}, ${masterArray[i][1][2]}`);
+        }
+    }
+}
+
+function consecutiveHover(node, masterArray) {
+    drawFromArray(node, masterArray);
+}
+
+function firstHover(node) {
+    if(dropDown == 'Black') {
+        node.style.backgroundColor = `black`;
+    } else {
+        let red = Math.floor(Math.random() * 256);
+        let green = Math.floor(Math.random() * 256);
+        let blue = Math.floor(Math.random() * 256);
+
+        node.classList.add('activated');
+        node.style.backgroundColor = `rgb(${red},${green},${blue})`;
+
+        let divBackgroundColor = window.getComputedStyle(node).backgroundColor;
+        let values = divBackgroundColor.substring(4, divBackgroundColor.length-1).replace(/ /g, '').split(',');
+        let alteredValues = [values[0]/10, values[1]/10, values[2]/10];
+        let infoArray = [node, values, alteredValues];
+        masterArray.push(infoArray);
+    }
 }
 
 function clearGrid(numBoxes) {
@@ -70,6 +114,7 @@ function promptUser() {
 function initialize(numBoxes) {
     setup(numBoxes);
     initButton();
+    initBoxRight();
 }
 
 function initButton() {
@@ -91,6 +136,15 @@ function removeGrid() {
     while(gridContainerSelector.hasChildNodes()) {
         gridContainerSelector.removeChild(gridContainerSelector.firstChild);
     }
+}
+
+function initBoxRight() {
+    const gitBox = document.querySelector('#box-right');
+
+    gitBox.addEventListener('click', () => {
+        location.href='https://github.com/gormlessfie';
+        console.log('pressed!');
+    });
 }
 
 initialize(16);
