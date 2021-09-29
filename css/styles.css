@@ -19,10 +19,14 @@ img {
 #header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     background-color: #fdebe7;
+    padding: 0px 30px;
 }
 
+#left-text {
+    font-size: 12px;
+}
 
 #box-right {
     display: flex;
@@ -31,16 +35,14 @@ img {
     gap: 5px;
     border-radius: 30px;
     background-color: #ef9273;
-    margin-left: 300px;
     cursor: pointer;
 }
 
 #center-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-left: 410px;
     gap: 30px;
+    margin-left: -20px;
 }
 
 #resetbtn {
